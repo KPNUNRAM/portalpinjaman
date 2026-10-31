@@ -1,0 +1,2062 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Resmi KPN UNRAM - Koperasi Pegawai Negeri Universitas Mataram</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between bg-cover bg-center bg-no-repeat bg-fixed" style="background-image: linear-gradient(rgba(248, 250, 252, 0.9), rgba(248, 250, 252, 0.93)), url('https://lh3.googleusercontent.com/d/101IT4slqV-5AMfPzab4_ys71W5sebnrn=s1000');">
+
+    <header class="bg-white/85 backdrop-blur-md border-b border-slate-200/60 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="currentView='home'; render();">
+                <div class="w-12 h-12 rounded-2xl bg-white shadow-md border border-slate-100 flex items-center justify-center p-1 overflow-hidden">
+                    <img src="https://lh3.googleusercontent.com/d/1C5jUqDv-1XWXYrwG74XcELc4ThYY_4J3=s220" alt="Logo KPN UNRAM" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentNode.innerHTML='<i class=\'fa-solid fa-building-columns text-indigo-600 text-xl\'></i>';">
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-slate-900 text-base sm:text-lg tracking-tight">KPN UNRAM</h1>
+                    <p class="text-[11px] font-semibold text-indigo-600 uppercase tracking-wider">Koperasi Pegawai Negeri Universitas Mataram</p>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center space-x-1">
+                <button onclick="currentView='home'; render();" class="px-4 py-2 rounded-xl text-xs font-bold transition text-slate-700 hover:bg-slate-100">Beranda</button>
+                <button onclick="currentView='about'; render();" class="px-4 py-2 rounded-xl text-xs font-bold transition text-slate-700 hover:bg-slate-100">Tentang KPN</button>
+                <button onclick="currentView='services'; render();" class="px-4 py-2 rounded-xl text-xs font-bold transition text-slate-700 hover:bg-slate-100">Layanan & Pinjaman</button>
+                <button onclick="currentView='contact'; render();" class="px-4 py-2 rounded-xl text-xs font-bold transition text-slate-700 hover:bg-slate-100">Kontak</button>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <button onclick="openPortalApp()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-200 transition flex items-center space-x-2">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span>Login / Portal</span>
+                </button>
+                <button onclick="toggleMobileMenu()" class="md:hidden w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 border-b border-slate-200 px-4 py-3 space-y-2 backdrop-blur-xl">
+            <button onclick="currentView='home'; render(); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-xs font-bold text-slate-700 hover:bg-slate-100">Beranda</button>
+            <button onclick="currentView='about'; render(); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-xs font-bold text-slate-700 hover:bg-slate-100">Tentang KPN</button>
+            <button onclick="currentView='services'; render(); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-xs font-bold text-slate-700 hover:bg-slate-100">Layanan & Pinjaman</button>
+            <button onclick="currentView='contact'; render(); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-xs font-bold text-slate-700 hover:bg-slate-100">Kontak</button>
+        </div>
+    </header>
+
+    <main id="portal-root" class="flex-grow flex flex-col max-w-[1920px] w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Dynamic Views rendered here -->
+    </main>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/6285338833172?text=Halo%20Pengurus%20KPN%20UNRAM,%20saya%20ingin%20bertanya%20mengenai%20layanan%20koperasi." target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-50 bg-emerald-500 hover:bg-emerald-600 text-white p-3.5 px-5 rounded-full shadow-2xl flex items-center space-x-2 transition transform hover:scale-105 focus:outline-none" title="Kirim Pesan WhatsApp">
+        <i class="fa-brands fa-whatsapp text-2xl"></i>
+        <span class="text-xs font-bold hidden sm:inline-block">Hubungi Kami via WhatsApp</span>
+    </a>
+
+    <footer class="bg-white/85 backdrop-blur-md border-t border-slate-200/60 py-6 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p class="font-bold text-slate-700">&copy; 2026 Koperasi Pegawai Negeri (KPN) Universitas Mataram (UNRAM). All rights reserved.</p>
+            <p>Jl. Majapahit No. 62 Mataram, Nusa Tenggara Barat, Indonesia</p>
+        </div>
+    </footer>
+
+    <script>
+        const STORAGE_KEY_USERS = 'koperasi_users_v5';
+        const STORAGE_KEY_LOANS = 'koperasi_loans_v5';
+        const STORAGE_KEY_SAVINGS = 'koperasi_savings_v5';
+        const STORAGE_KEY_PAYMENTS = 'koperasi_payments_v5';
+        const STORAGE_KEY_SESSION = 'koperasi_session_v5';
+        
+        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw7ShMvhht8Pfr93T0S7vEoYamWhv1PtBeXrBsm4xzHwI0K66l98sW3uXp8KVNtv8bGFA/exec';
+
+        async function fetchLoansAndSavingsFromGoogleSheets(nip) {
+            try {
+                const responseLoans = await fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getLoans&nip=${nip}`);
+                if (responseLoans.ok) {
+                    const sheetLoans = await responseLoans.json();
+                    if (Array.isArray(sheetLoans) && sheetLoans.length > 0) {
+                        let localLoans = getLoans();
+                        sheetLoans.forEach(sLoan => {
+                            const idx = localLoans.findIndex(l => l.id === sLoan.id || (l.nip === nip && l.pinjamanKe === sLoan.pinjamanKe));
+                            if (idx !== -1) {
+                                if (sLoan.sisaPinjaman !== undefined) localLoans[idx].sisaPinjaman = parseFloat(sLoan.sisaPinjaman);
+                                if (sLoan.jumlahPinjaman !== undefined) localLoans[idx].jumlahPinjaman = parseFloat(sLoan.jumlahPinjaman);
+                                if (sLoan.tglDisetujui !== undefined) localLoans[idx].tglDisetujui = sLoan.tglDisetujui;
+                                if (sLoan.status !== undefined) localLoans[idx].status = sLoan.status;
+                            } else {
+                                localLoans.push(sLoan);
+                            }
+                        });
+                        saveLoans(localLoans);
+                    }
+                }
+
+                const responseSavings = await fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=getSavings&nip=${nip}`);
+                if (responseSavings.ok) {
+                    const sheetSavings = await responseSavings.json();
+                    if (Array.isArray(sheetSavings) && sheetSavings.length > 0) {
+                        let localSavings = getSavings();
+                        sheetSavings.forEach(sSav => {
+                            const idx = localSavings.findIndex(s => s.id === sSav.id || (s.nip === nip && s.jenis === sSav.jenis));
+                            if (idx !== -1) {
+                                if (sSav.jumlah !== undefined) localSavings[idx].jumlah = parseFloat(sSav.jumlah);
+                                if (sSav.status !== undefined) localSavings[idx].status = sSav.status;
+                            } else {
+                                localSavings.push(sSav);
+                            }
+                        });
+                        saveSavings(localSavings);
+                    }
+                }
+            } catch (err) {
+                console.log("Menggunakan data lokal.");
+            }
+        }
+
+        if (!localStorage.getItem(STORAGE_KEY_USERS)) {
+            const defaultAdmin = [{
+                role: 'Pegawai',
+                nip: 'admin',
+                password: 'admin1234567890123',
+                nama: 'Administrator KPN UNRAM',
+                tempatLahir: 'Mataram',
+                tglLahir: '1990-01-01',
+                telp: '081234567890',
+                alamat: 'Kantor Pusat KPN UNRAM',
+                golongan: 'IV/a',
+                unitKerja: 'Kantor Pusat',
+                foto: 'https://placehold.co/150x150/4f46e5/ffffff?text=Admin',
+                createdAt: new Date().toISOString(),
+                isAdmin: true,
+                isApproved: true
+            }];
+            localStorage.setItem(STORAGE_KEY_USERS, JSON.stringify(defaultAdmin));
+        }
+        if (!localStorage.getItem(STORAGE_KEY_LOANS)) localStorage.setItem(STORAGE_KEY_LOANS, JSON.stringify([]));
+        if (!localStorage.getItem(STORAGE_KEY_SAVINGS)) localStorage.setItem(STORAGE_KEY_SAVINGS, JSON.stringify([]));
+        if (!localStorage.getItem(STORAGE_KEY_PAYMENTS)) localStorage.setItem(STORAGE_KEY_PAYMENTS, JSON.stringify([]));
+
+        function getUsers() { return JSON.parse(localStorage.getItem(STORAGE_KEY_USERS) || '[]'); }
+        function saveUsers(u) { localStorage.setItem(STORAGE_KEY_USERS, JSON.stringify(u)); }
+        function getLoans() { return JSON.parse(localStorage.getItem(STORAGE_KEY_LOANS) || '[]'); }
+        function saveLoans(l) { localStorage.setItem(STORAGE_KEY_LOANS, JSON.stringify(l)); }
+        function getSavings() { return JSON.parse(localStorage.getItem(STORAGE_KEY_SAVINGS) || '[]'); }
+        function saveSavings(s) { localStorage.setItem(STORAGE_KEY_SAVINGS, JSON.stringify(s)); }
+        function getPayments() { return JSON.parse(localStorage.getItem(STORAGE_KEY_PAYMENTS) || '[]'); }
+        function savePayments(p) { localStorage.setItem(STORAGE_KEY_PAYMENTS, JSON.stringify(p)); }
+        function getSession() { const s = localStorage.getItem(STORAGE_KEY_SESSION); return s ? JSON.parse(s) : null; }
+        function setSession(u) { localStorage.setItem(STORAGE_KEY_SESSION, JSON.stringify(u)); }
+        function clearSession() { localStorage.removeItem(STORAGE_KEY_SESSION); }
+
+        function calculateUserSavings(nip) {
+            const savings = getSavings().filter(s => s.nip === nip && s.status === 'Disetujui');
+            const totalPokok = savings.filter(s => s.jenis === 'Pokok').reduce((acc, curr) => acc + (parseFloat(curr.jumlah) || 0), 0);
+            const totalWajib = savings.filter(s => s.jenis === 'Wajib').reduce((acc, curr) => acc + (parseFloat(curr.jumlah) || 0), 0);
+            const totalSukarela = savings.filter(s => s.jenis === 'Sukarela').reduce((acc, curr) => acc + (parseFloat(curr.jumlah) || 0), 0);
+            return {
+                pokok: totalPokok,
+                wajib: totalWajib,
+                sukarela: totalSukarela,
+                total: totalPokok + totalWajib + totalSukarela
+            };
+        }
+
+        async function syncToGoogleSheets(payload) {
+            try {
+                await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (err) {
+                console.error("Gagal sinkronisasi ke Google Sheets:", err);
+            }
+        }
+
+        function showNotification(message, type = 'success', callback = null) {
+            const existing = document.getElementById('custom-modal');
+            if (existing) existing.remove();
+
+            const modal = document.createElement('div');
+            modal.id = 'custom-modal';
+            modal.className = 'fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn';
+            const iconClass = type === 'success' ? 'fa-circle-check text-emerald-500' : 'fa-circle-exclamation text-rose-500';
+
+            modal.innerHTML = `
+                <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl max-w-sm w-full p-6 text-center border border-white/40">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full bg-slate-100 text-3xl">
+                        <i class="fa-solid ${iconClass}"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">${type === 'success' ? 'Berhasil!' : 'Perhatian!'}</h3>
+                    <p class="text-xs text-slate-600 mb-6 leading-relaxed">${message}</p>
+                    <button id="modal-ok-btn" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl shadow-lg shadow-indigo-200 transition">OK</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.getElementById('modal-ok-btn').onclick = () => { modal.remove(); if (callback) callback(); };
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function togglePasswordVisibility(id) {
+            const input = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        function downloadStatusReportPDF(nip) {
+            const element = document.getElementById('status-report-pdf-area');
+            if (!element) return;
+            
+            const opt = {
+                margin:       [0.4, 0.4, 0.4, 0.4],
+                filename:     `Rincian_Sisa_Pinjaman_KPN_UNRAM_${nip}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            showNotification('Mengunduh Laporan Sisa Pinjaman PDF...', 'success');
+            html2pdf().set(opt).from(element).save();
+        }
+
+        const UNIT_KERJA_LIST = [
+            "Kantor Pusat", "Fak. Kedokteran", "Fak. IKIP", "Fak. Pertanian",
+            "Fak. Hukum", "Fak. Ekonomi", "Fak. Tekhnik", "Fak. Tekhnologi Pangan", "Fak. MIPA"
+        ];
+
+        let currentView = 'app';
+        let authMode = 'login';
+        let userActiveTab = 'profile';
+        let adminActiveTab = 'loans';
+
+        function openPortalApp() {
+            currentView='app';
+            render();
+        }
+
+        function render() {
+            const root = document.getElementById('portal-root');
+            root.innerHTML = '';
+
+            if (currentView === 'home') renderHomeView(root);
+            else if (currentView === 'about') renderAboutView(root);
+            else if (currentView === 'services') renderServicesView(root);
+            else if (currentView === 'contact') renderContactView(root);
+            else if (currentView === 'app') renderPortalAppView(root);
+        }
+
+        function renderHomeView(container) {
+            container.innerHTML = `
+                <div class="relative overflow-hidden py-16 lg:py-24">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                                <span class="px-3.5 py-1.5 bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-bold rounded-full uppercase tracking-wider inline-block">
+                                    <i class="fa-solid fa-shield-halved mr-1.5"></i> Resmi KPN Universitas Mataram
+                                </span>
+                                <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                                    Solusi Kesejahteraan & Pinjaman Anggota <span class="text-indigo-600">KPN UNRAM</span>
+                                </h1>
+                                <p class="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                                    Portal layanan mandiri terintegrasi bagi seluruh pegawai dan dosen Universitas Mataram. Kelola pengajuan pinjaman cepat dan pantau simpanan secara transparan dan aman.
+                                </p>
+                                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 pt-4">
+                                    <button onclick="openPortalApp(); authMode='login'; render();" class="px-6 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-xl shadow-indigo-200 transition text-sm flex items-center justify-center space-x-2">
+                                        <i class="fa-solid fa-right-to-bracket"></i>
+                                        <span>Masuk Portal KPN</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="lg:col-span-5">
+                                <div class="glass-card p-6 rounded-3xl shadow-2xl border border-white/80 space-y-4">
+                                    <div class="w-full h-80 rounded-2xl overflow-hidden shadow-inner bg-slate-900 flex items-center justify-center relative">
+                                        <img src="https://lh3.googleusercontent.com/d/101IT4slqV-5AMfPzab4_ys71W5sebnrn=s1000" alt="UNRAM" class="w-full h-full object-contain p-2">
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-3 text-center">
+                                        <div class="bg-white/80 p-3.5 rounded-xl border border-slate-100 shadow-sm">
+                                            <span class="text-xs text-slate-500 font-semibold block">Bunga Ringan</span>
+                                            <span class="text-lg font-extrabold text-indigo-600">10% / Tahun</span>
+                                        </div>
+                                        <div class="bg-white/80 p-3.5 rounded-xl border border-slate-100 shadow-sm">
+                                            <span class="text-xs text-slate-500 font-semibold block">Proses Cepat</span>
+                                            <span class="text-lg font-extrabold text-emerald-600">Transparan</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAboutView(container) {
+            container.innerHTML = `
+                <div class="max-w-4xl mx-auto px-4 py-12 space-y-8 animate-fadeIn">
+                    <div class="glass-card p-8 rounded-3xl shadow-lg space-y-6">
+                        <h2 class="text-2xl font-extrabold text-slate-900 border-b border-slate-200/60 pb-4">Tentang KPN Universitas Mataram</h2>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Koperasi Pegawai Negeri (KPN) Universitas Mataram merupakan badan usaha koperasi berbadan hukum yang didirikan khusus untuk melayani dan meningkatkan kesejahteraan ekonomi para dosen, pegawai, serta tenaga kependidikan di lingkungan Universitas Mataram.
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+                            <div class="bg-white/70 p-5 rounded-2xl border border-slate-200/60 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-base"><i class="fa-solid fa-bullseye"></i></div>
+                                <h3 class="font-bold text-slate-800 text-sm">Visi Kami</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed">Menjadi koperasi pegawai terdepan yang mandiri, profesional, dan mampu memberikan kesejahteraan maksimal bagi seluruh anggota.</p>
+                            </div>
+                            <div class="bg-white/70 p-5 rounded-2xl border border-slate-200/60 space-y-2">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-base"><i class="fa-solid fa-list-check"></i></div>
+                                <h3 class="font-bold text-slate-800 text-sm">Misi Kami</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed">Mengelola pinjaman dan simpanan dengan prinsip transparansi, akuntabilitas, serta pelayanan prima berbasis teknologi digital.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderServicesView(container) {
+            container.innerHTML = `
+                <div class="max-w-4xl mx-auto px-4 py-12 space-y-8 animate-fadeIn">
+                    <div class="text-center space-y-2">
+                        <h2 class="text-2xl font-extrabold text-slate-900">Layanan & Produk KPN UNRAM</h2>
+                        <p class="text-xs text-slate-600">Berbagai fasilitas simpanan dan pinjaman dengan syarat mudah khusus anggota aktif KPN UNRAM.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="glass-card p-6 rounded-3xl shadow-sm space-y-4 border border-white/80">
+                            <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                            <h3 class="font-bold text-slate-800 text-base">Pinjaman Reguler</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">Pinjaman dana untuk keperluan renovasi rumah, pendidikan anak, atau kebutuhan mendesak dengan tenor hingga 60 bulan.</p>
+                            <ul class="text-xs text-slate-700 space-y-1.5 pt-2 border-t border-slate-200/60 font-medium">
+                                <li><i class="fa-solid fa-check text-indigo-600 mr-2"></i> Bunga 10% / tahun</li>
+                            </ul>
+                        </div>
+                        <div class="glass-card p-6 rounded-3xl shadow-sm space-y-4 border border-white/80">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-piggy-bank"></i></div>
+                            <h3 class="font-bold text-slate-800 text-base">Simpanan Anggota</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">Terdiri dari Simpanan Pokok, Simpanan Wajib, dan Simpanan Sukarela untuk memperkuat fondasi finansial anggota.</p>
+                            <ul class="text-xs text-slate-700 space-y-1.5 pt-2 border-t border-slate-200/60 font-medium">
+                                <li><i class="fa-solid fa-check text-blue-600 mr-2"></i> Pengelolaan terstruktur dan transparan</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderContactView(container) {
+            container.innerHTML = `
+                <div class="max-w-4xl mx-auto px-4 py-12 space-y-8 animate-fadeIn">
+                    <div class="glass-card p-8 rounded-3xl shadow-lg space-y-6">
+                        <h2 class="text-2xl font-extrabold text-slate-900 border-b border-slate-200/60 pb-4">Kontak & Lokasi Kantor KPN UNRAM</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm text-slate-700">
+                            <div class="space-y-4">
+                                <div class="flex items-start space-x-3">
+                                    <i class="fa-solid fa-location-dot text-indigo-600 mt-1 text-base"></i>
+                                    <div>
+                                        <strong class="block text-slate-900 font-bold">Alamat Kantor Pusat</strong>
+                                        <span class="text-xs text-slate-600">Jl. Majapahit No. 62 Mataram, Kompleks Universitas Mataram, Nusa Tenggara Barat</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <i class="fa-brands fa-whatsapp text-emerald-600 mt-1 text-base"></i>
+                                    <div>
+                                        <strong class="block text-slate-900 font-bold">Layanan Pesan WhatsApp</strong>
+                                        <a href="https://wa.me/6285338833172?text=Halo%20Pengurus%20KPN%20UNRAM" target="_blank" rel="noopener noreferrer" class="text-xs text-indigo-600 underline font-bold hover:text-indigo-800">
+                                            Klik untuk Chat Langsung via WhatsApp
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <i class="fa-solid fa-envelope text-indigo-600 mt-1 text-base"></i>
+                                    <div>
+                                        <strong class="block text-slate-900 font-bold">Email Resmi</strong>
+                                        <span class="text-xs text-slate-600">koperasiunram@gmail.com</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-indigo-50/70 p-5 rounded-2xl border border-indigo-100 flex flex-col justify-center space-y-3">
+                                <h3 class="font-bold text-indigo-900 text-sm">Jam Operasional</h3>
+                                <p class="text-xs text-slate-700 leading-relaxed">
+                                    Senin - Kamis : 08.00 - 14.00 WITA<br>
+                                    Jumat : 08.00 - 14.00 WITA<br>
+                                    Sabtu & Minggu : Libur
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderPortalAppView(container) {
+            const session = getSession();
+            if (!session) {
+                container.innerHTML = `
+                    <div class="flex-grow flex items-center justify-center p-4 py-12">
+                        <div class="glass-card rounded-3xl shadow-2xl border border-white/80 w-full max-w-xl p-6 sm:p-8 overflow-hidden animate-fadeIn space-y-6">
+                            <div class="text-center">
+                                <div class="w-16 h-16 rounded-2xl mx-auto flex items-center justify-center shadow-lg mb-3 overflow-hidden bg-white border border-slate-100">
+                                    <img src="https://lh3.googleusercontent.com/d/1C5jUqDv-1XWXYrwG74XcELc4ThYY_4J3=s220" alt="Logo" class="w-full h-full object-contain p-1" onerror="this.onerror=null; this.parentNode.innerHTML='<div class=\'w-full h-full bg-indigo-600 text-white flex items-center justify-center text-2xl\'><i class=\'fa-solid fa-building-columns\'></i></div>';">
+                                </div>
+                                <h2 class="text-2xl font-bold text-slate-900">Portal Anggota KPN</h2>
+                                <p class="text-xs text-slate-600 mt-1">Masuk atau daftar akun pinjaman</p>
+                            </div>
+
+                            <div class="bg-amber-50/90 border border-amber-200/80 rounded-2xl p-4 text-xs text-slate-700 space-y-2.5">
+                                <h3 class="font-extrabold text-amber-900 text-xs sm:text-sm flex items-center space-x-2">
+                                    <i class="fa-solid fa-clipboard-check text-amber-600"></i>
+                                    <span>Syarat - Syarat Pengajuan Pinjaman:</span>
+                                </h3>
+                                <ol class="list-decimal pl-5 space-y-2 leading-relaxed text-slate-800">
+                                    <li>
+                                        <strong>Unduh Form Pengajuan Pinjaman:</strong> 
+                                        <a href="https://docs.google.com/document/d/1JD-LvWyeMW9nSCFYyDwdfuG7a2Uxq844/edit?usp=drive_link&ouid=112490947408300010603&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer" class="text-indigo-600 font-bold underline hover:text-indigo-800 break-all inline-flex items-center gap-1">
+                                            <span>Klik di sini untuk mengunduh dokumen</span>
+                                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                        </a>
+                                    </li>
+                                    <li><strong>Mengisi data</strong> yang telah diunduh pada poin 1 secara lengkap dan jujur.</li>
+                                    <li><strong>Daftar / Buat Akun</strong> pada form pendaftaran di bawah ini jika belum memiliki akun, lalu unggah berkas formulir yang telah diisi saat mengajukan pinjaman. <em>(Catatan: Akun baru memerlukan persetujuan Admin sebelum dapat login).</em></li>
+                                </ol>
+                            </div>
+
+                            <div class="flex bg-slate-200/70 p-1 rounded-xl">
+                                <button onclick="authMode='login'; render();" class="flex-1 py-2 text-xs font-semibold rounded-lg transition ${authMode === 'login' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'}">
+                                    Masuk (Login)
+                                </button>
+                                <button onclick="authMode='register'; render();" class="flex-1 py-2 text-xs font-semibold rounded-lg transition ${authMode === 'register' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'}">
+                                    Daftar Akun
+                                </button>
+                            </div>
+
+                            <div class="flex justify-between items-center">
+                                <button onclick="currentView='home'; render();" class="text-xs text-indigo-600 font-bold hover:underline flex items-center space-x-1">
+                                    <i class="fa-solid fa-arrow-left"></i>
+                                    <span>Kembali ke Beranda Utama</span>
+                                </button>
+                            </div>
+
+                            ${authMode === 'login' ? renderLoginForm() : renderRegisterForm()}
+                        </div>
+                    </div>
+                `;
+            } else if (session.role === 'admin' || session.isAdmin || session.nip === 'admin') {
+                renderAdminDashboard(container, session);
+            } else {
+                renderUserDashboard(container, session);
+            }
+        }
+
+        function renderLoginForm() {
+            return `
+                <form onsubmit="handleLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">NIP / Username</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400"><i class="fa-solid fa-user"></i></span>
+                            <input type="text" id="login-id" required class="w-full pl-10 pr-4 py-3 bg-white/70 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500" placeholder="Masukkan NIP atau username">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Password</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" id="login-pass" required class="w-full pl-10 pr-4 py-3 bg-white/70 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500" placeholder="••••••••">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg shadow-indigo-200 transition mt-2">
+                        Masuk Sistem
+                    </button>
+                </form>
+            `;
+        }
+
+        function renderRegisterForm() {
+            let unitOptions = UNIT_KERJA_LIST.map(u => `<option value="${u}">${u}</option>`).join('');
+            return `
+                <form onsubmit="handleRegister(event)" class="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">NIP / Username*</label>
+                        <input type="text" id="reg-nip" required class="w-full px-4 py-2.5 bg-white/70 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500" placeholder="NIP pegawai">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Status Kepegawaian*</label>
+                        <select id="reg-role" class="w-full px-4 py-2.5 bg-white/70 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500">
+                            <option value="Pegawai">Pegawai</option>
+                            <option value="Dosen">Dosen</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Password*</label>
+                            <input type="password" id="reg-pass" required class="w-full px-4 py-2.5 bg-white/70 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500" placeholder="Min. 6 karakter">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Konfirmasi Pass*</label>
+                            <input type="password" id="reg-pass-confirm" required class="w-full px-4 py-2.5 bg-white/70 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500" placeholder="Ulangi pass">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Lengkap & Gelar*</label>
+                        <input type="text" id="reg-nama" required class="w-full px-4 py-2.5 bg-white/70 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500" placeholder="Nama lengkap">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Tempat Lahir*</label>
+                            <input type="text" id="reg-tempat-lahir" required class="w-full px-4 py-2.5 bg-white/70 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500" placeholder="Kota">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Tgl Lahir*</label>
+                            <input type="date" id="reg-tgl-lahir" required class="w-full px-4 py-2.5 bg-white/70 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">No. Telp / WhatsApp*</label>
+                        <input type="tel" id="reg-telp" required class="w-full px-4 py-2.5 bg-white/70 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500" placeholder="Contoh: 081234567890">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Tempat Tinggal*</label>
+                        <textarea id="reg-alamat" rows="2" required class="w-full px-4 py-2 bg-white/70 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 resize-none" placeholder="Alamat lengkap"></textarea>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Golongan*</label>
+                            <input type="text" id="reg-golongan" required class="w-full px-4 py-2.5 bg-white/70 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500" placeholder="III/c">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Unit Kerja*</label>
+                            <select id="reg-unit" required class="w-full px-4 py-2.5 bg-white/70 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500">
+                                <option value="">-- Pilih Unit --</option>
+                                ${unitOptions}
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Upload Foto Profil*</label>
+                        <input type="file" id="reg-foto" accept="image/*" required class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700">
+                    </div>
+                    <button type="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg shadow-indigo-200 transition mt-2">
+                        Daftar Sekarang
+                    </button>
+                </form>
+            `;
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const id = document.getElementById('login-id').value.trim();
+            const pass = document.getElementById('login-pass').value;
+            const users = getUsers();
+            const foundUser = users.find(u => u.nip === id && u.password === pass);
+
+            if (foundUser) {
+                if (foundUser.nip === 'admin') {
+                    foundUser.isAdmin = true;
+                    foundUser.isApproved = true;
+                }
+                if (!foundUser.isApproved) {
+                    showNotification('Akun Anda masih menunggu persetujuan dari Administrator KPN UNRAM. Mohon tunggu hingga akun disetujui.', 'error');
+                    return;
+                }
+                setSession(foundUser);
+                showNotification(`Selamat datang kembali, ${foundUser.nama}!`, 'success', render);
+            } else {
+                showNotification('NIP atau Password salah!', 'error');
+            }
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const pass = document.getElementById('reg-pass').value;
+            const passConfirm = document.getElementById('reg-pass-confirm').value;
+            if (pass !== passConfirm) {
+                showNotification('Password dan Konfirmasi Password tidak sama!', 'error');
+                return;
+            }
+            const nip = document.getElementById('reg-nip').value.trim();
+            const users = getUsers();
+            if (users.some(u => u.nip === nip)) {
+                showNotification('NIP tersebut sudah terdaftar!', 'error');
+                return;
+            }
+            const fotoInput = document.getElementById('reg-foto').files[0];
+            if (fotoInput) {
+                const reader = new FileReader();
+                reader.onload = function(ev) { processRegistration(ev.target.result, pass); };
+                reader.readAsDataURL(fotoInput);
+            } else {
+                processRegistration('https://placehold.co/150x150/e2e8f0/64748b?text=Foto', pass);
+            }
+        }
+
+        function processRegistration(fotoBase64, pass) {
+            const newUser = {
+                role: document.getElementById('reg-role').value,
+                nip: document.getElementById('reg-nip').value.trim(),
+                password: pass,
+                nama: document.getElementById('reg-nama').value.trim(),
+                tempatLahir: document.getElementById('reg-tempat-lahir').value.trim(),
+                tglLahir: document.getElementById('reg-tgl-lahir').value,
+                telp: document.getElementById('reg-telp').value.trim(),
+                alamat: document.getElementById('reg-alamat').value.trim(),
+                golongan: document.getElementById('reg-golongan').value.trim(),
+                unitKerja: document.getElementById('reg-unit').value,
+                foto: fotoBase64,
+                createdAt: new Date().toISOString(),
+                isAdmin: false,
+                isApproved: false
+            };
+            const users = getUsers();
+            users.push(newUser);
+            saveUsers(users);
+
+            syncToGoogleSheets({
+                action: "saveUser",
+                ...newUser
+            });
+
+            showNotification('Pendaftaran akun berhasil! Akun Anda sedang menunggu persetujuan dari Administrator sebelum dapat digunakan untuk masuk ke sistem.', 'success', () => { authMode = 'login'; render(); });
+        }
+
+        function logout() {
+            clearSession();
+            currentView = 'home';
+            render();
+        }
+
+        function renderUserDashboard(container, user) {
+            fetchLoansAndSavingsFromGoogleSheets(user.nip);
+
+            container.innerHTML = `
+                <header class="bg-white/70 backdrop-blur-md border-b border-slate-200/60 sticky top-20 z-40 shadow-sm">
+                    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-xl overflow-hidden bg-indigo-100 border border-indigo-200 flex items-center justify-center">
+                                <img src="${user.foto}" alt="Foto" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/150x150/e2e8f0/64748b?text=User'">
+                            </div>
+                            <div>
+                                <h2 class="font-bold text-sm text-slate-800">${user.nama}</h2>
+                                <p class="text-xs text-slate-600">NIP: ${user.nip} | KPN UNRAM</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="currentView='home'; render();" class="px-3 py-2 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 rounded-xl transition border border-slate-200">Ke Beranda</button>
+                            <button onclick="logout()" class="px-3.5 py-2 text-xs font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-xl transition border border-rose-100">Keluar</button>
+                        </div>
+                    </div>
+                </header>
+
+                <main class="max-w-6xl mx-auto px-4 py-6 flex-grow w-full">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div class="md:col-span-1 space-y-2">
+                            <div class="glass-card rounded-2xl shadow-sm p-2 space-y-1">
+                                <button onclick="userActiveTab='profile'; render();" class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold transition flex items-center space-x-2.5 ${userActiveTab === 'profile' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-700 hover:bg-white/50'}"><i class="fa-solid fa-id-card w-4"></i><span>Profil Pegawai</span></button>
+                                <button onclick="userActiveTab='savings'; render();" class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold transition flex items-center space-x-2.5 ${userActiveTab === 'savings' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-700 hover:bg-white/50'}"><i class="fa-solid fa-piggy-bank w-4"></i><span>Simpanan Anggota</span></button>
+                                <button onclick="userActiveTab='apply-loan'; render();" class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold transition flex items-center space-x-2.5 ${userActiveTab === 'apply-loan' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-700 hover:bg-white/50'}"><i class="fa-solid fa-hand-holding-dollar w-4"></i><span>Pengajuan Pinjaman</span></button>
+                                <button onclick="userActiveTab='loan-history'; render();" class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold transition flex items-center space-x-2.5 ${userActiveTab === 'loan-history' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-700 hover:bg-white/50'}"><i class="fa-solid fa-clock-rotate-left w-4"></i><span>Sisa Pinjaman</span></button>
+                                <button onclick="userActiveTab='files'; render();" class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold transition flex items-center space-x-2.5 ${userActiveTab === 'files' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-700 hover:bg-white/50'}"><i class="fa-solid fa-folder-open w-4"></i><span>Berkas Terupload</span></button>
+                            </div>
+                        </div>
+
+                        <div class="md:col-span-3 space-y-6">
+                            ${userActiveTab === 'profile' ? renderUserProfileContent(user) : ''}
+                            ${userActiveTab === 'savings' ? renderUserSavingsContent(user) : ''}
+                            ${userActiveTab === 'apply-loan' ? renderLoanApplyContent(user) : ''}
+                            ${userActiveTab === 'loan-history' ? renderLoanHistoryContent(user) : ''}
+                            ${userActiveTab === 'files' ? renderUserFilesContent(user) : ''}
+                        </div>
+                    </div>
+                </main>
+            `;
+        }
+
+        function renderUserSavingsContent(user) {
+            const savingsData = calculateUserSavings(user.nip);
+
+            return `
+                <div class="glass-card rounded-2xl shadow-sm p-6 space-y-6">
+                    <div class="flex justify-between items-center pb-3 border-b border-slate-200/60">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center space-x-2">
+                            <i class="fa-solid fa-piggy-bank text-indigo-600"></i>
+                            <span>Informasi Simpanan Anggota KPN UNRAM</span>
+                        </h3>
+                        <button onclick="fetchLoansAndSavingsFromGoogleSheets('${user.nip}'); render();" class="px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-rotate"></i>
+                            <span>Muat Ulang dari Sheet</span>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-white/90 border border-indigo-100 p-5 rounded-2xl shadow-sm space-y-2">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-vault"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Simpanan Pokok</span>
+                            <span class="text-xl font-extrabold text-indigo-600">Rp ${savingsData.pokok.toLocaleString('id-ID')}</span>
+                        </div>
+
+                        <div class="bg-white/90 border border-blue-100 p-5 rounded-2xl shadow-sm space-y-2">
+                            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Simpanan Wajib</span>
+                            <span class="text-xl font-extrabold text-blue-600">Rp ${savingsData.wajib.toLocaleString('id-ID')}</span>
+                        </div>
+
+                        <div class="bg-white/90 border border-teal-100 p-5 rounded-2xl shadow-sm space-y-2">
+                            <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-hand-holding-heart"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Simpanan Sukarela</span>
+                            <span class="text-xl font-extrabold text-teal-600">Rp ${savingsData.sukarela.toLocaleString('id-ID')}</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-indigo-600 to-indigo-800 text-white p-6 rounded-2xl shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-200 uppercase tracking-wider block">Total Keseluruhan Simpanan Anda</span>
+                            <h4 class="text-2xl sm:text-3xl font-extrabold mt-1">Rp ${savingsData.total.toLocaleString('id-ID')}</h4>
+                        </div>
+                        <span class="px-3.5 py-1.5 bg-white/10 backdrop-blur-md rounded-xl text-xs font-medium border border-white/20">
+                            <i class="fa-solid fa-shield-check mr-1.5"></i> Terverifikasi & Tersimpan Aman
+                        </span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderUserProfileContent(user) {
+            return `
+                <div class="glass-card rounded-2xl shadow-sm p-6 space-y-4">
+                    <h3 class="text-base font-bold text-slate-800 pb-3 border-b border-slate-200/60 flex items-center space-x-2">
+                        <i class="fa-solid fa-circle-user text-indigo-600"></i>
+                        <span>Informasi Profil Anggota</span>
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div class="flex flex-col items-center justify-center p-4 bg-white/50 rounded-2xl border border-white/60">
+                            <div class="w-28 h-28 rounded-2xl overflow-hidden shadow-md mb-3 border-2 border-white">
+                                <img src="${user.foto}" alt="Foto" class="w-full h-full object-cover">
+                            </div>
+                            <span class="px-2.5 py-1 bg-indigo-50 text-indigo-700 text-xs font-bold rounded-full">${user.golongan}</span>
+                        </div>
+                        <div class="sm:col-span-2 space-y-3 text-sm">
+                            <div class="grid grid-cols-3 py-1.5 border-b border-slate-200/40">
+                                <span class="text-slate-500 text-xs uppercase font-semibold">Nama</span>
+                                <span class="col-span-2 font-semibold text-slate-800">${user.nama}</span>
+                            </div>
+                            <div class="grid grid-cols-3 py-1.5 border-b border-slate-200/40">
+                                <span class="text-slate-500 text-xs uppercase font-semibold">NIP</span>
+                                <span class="col-span-2 font-mono text-slate-800">${user.nip}</span>
+                            </div>
+                            <div class="grid grid-cols-3 py-1.5 border-b border-slate-200/40">
+                                <span class="text-slate-500 text-xs uppercase font-semibold">TTL</span>
+                                <span class="col-span-2 text-slate-800">${user.tempatLahir}, ${user.tglLahir}</span>
+                            </div>
+                            <div class="grid grid-cols-3 py-1.5 border-b border-slate-200/40">
+                                <span class="text-slate-500 text-xs uppercase font-semibold">Telp / WA</span>
+                                <span class="col-span-2 text-slate-800 font-semibold text-emerald-600"><i class="fa-brands fa-whatsapp mr-1"></i>${user.telp || '-'}</span>
+                            </div>
+                            <div class="grid grid-cols-3 py-1.5 border-b border-slate-200/40">
+                                <span class="text-slate-500 text-xs uppercase font-semibold">Unit Kerja</span>
+                                <span class="col-span-2 font-medium text-slate-800">${user.unitKerja}</span>
+                            </div>
+                            <div class="grid grid-cols-3 py-1.5">
+                                <span class="text-slate-500 text-xs uppercase font-semibold">Alamat</span>
+                                <span class="col-span-2 text-slate-800">${user.alamat}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderLoanApplyContent(user) {
+            const userLoans = getLoans().filter(l => l.nip === user.nip);
+
+            return `
+                <div class="glass-card rounded-2xl shadow-sm p-6 space-y-4">
+                    <h3 class="text-base font-bold text-slate-800 pb-3 border-b border-slate-200/60 flex items-center space-x-2">
+                        <i class="fa-solid fa-file-invoice-dollar text-indigo-600"></i>
+                        <span>Formulir Tabel Pengajuan Pinjaman KPN UNRAM</span>
+                    </h3>
+
+                    <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs space-y-1">
+                        <span class="font-bold text-amber-900 block"><i class="fa-solid fa-file-word mr-1"></i> Blangko Formulir Pengajuan Pinjaman:</span>
+                        <p class="text-slate-600">Pastikan Anda telah mengunduh dan mengisi formulir pinjaman terlebih dahulu sebelum mengajukan permohonan di bawah ini.</p>
+                        <a href="https://docs.google.com/document/d/1JD-LvWyeMW9nSCFYyDwdfuG7a2Uxq844/edit?usp=drive_link&ouid=112490947408300010603&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-indigo-600 font-bold hover:underline gap-1 mt-1">
+                            <span>Unduh Formulir Pengajuan Pinjaman</span>
+                            <i class="fa-solid fa-external-link text-[10px]"></i>
+                        </a>
+                    </div>
+
+                    <form onsubmit="handleMultiLoanSubmit(event, '${user.nip}')" class="space-y-4">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-slate-100 text-slate-700 uppercase tracking-wider text-[11px]">
+                                        <th class="p-3 rounded-l-xl">Pinjaman Ke</th>
+                                        <th class="p-3">Besar Pinjaman (Rp)</th>
+                                        <th class="p-3">Jangka Waktu (1-60 Bulan)</th>
+                                        <th class="p-3">Keperluan Pinjaman</th>
+                                        <th class="p-3 rounded-r-xl">Sisa Pinjaman (Rp)</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200/60">
+                                    ${[1, 2, 3, 4, 5, 6].map(i => {
+                                        const loanLabel = `Pinjaman Ke ${i}`;
+                                        const existing = userLoans.find(l => l.pinjamanKe === loanLabel);
+                                        const valJumlah = existing ? existing.jumlahPinjaman : '';
+                                        const valTenor = existing ? existing.tenor : '';
+                                        const valKeperluan = existing ? existing.keperluan : '';
+                                        const valSisa = existing ? (existing.sisaPinjaman !== undefined ? existing.sisaPinjaman : (existing.totalPengembalian || 0)) : 0;
+
+                                        return `
+                                            <tr class="hover:bg-white/50 transition">
+                                                <td class="p-3 font-bold text-indigo-600">${loanLabel}</td>
+                                                <td class="p-3">
+                                                    <input type="number" id="multi-jumlah-${i}" min="0" step="50000" value="${valJumlah}" oninput="calculateTotalSisaPinjaman()" placeholder="Contoh: 10000000" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs focus:outline-none focus:border-indigo-500 font-semibold">
+                                                </td>
+                                                <td class="p-3">
+                                                    <input type="number" id="multi-tenor-${i}" min="1" max="60" value="${valTenor}" placeholder="Bulan (1-60)" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs focus:outline-none focus:border-indigo-500">
+                                                </td>
+                                                <td class="p-3">
+                                                    <input type="text" id="multi-keperluan-${i}" value="${valKeperluan}" placeholder="Keperluan pinjaman" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs focus:outline-none focus:border-indigo-500">
+                                                </td>
+                                                <td class="p-3">
+                                                    <input type="number" id="multi-sisa-${i}" min="0" value="${valSisa}" readonly placeholder="Atur oleh Admin / Sheets" class="multi-sisa-input w-full px-3 py-1.5 bg-slate-100 border border-slate-200 rounded-lg text-xs font-bold text-amber-700 cursor-not-allowed opacity-90">
+                                                </td>
+                                            </tr>
+                                        `;
+                                    }).join('')}
+                                </tbody>
+                                <tfoot>
+                                    <tr class="bg-indigo-50/80 font-bold border-t-2 border-indigo-200 text-slate-800">
+                                        <td colspan="4" class="p-3 text-right uppercase text-[11px] tracking-wider text-indigo-900">Total Sisa Pinjaman (Ke-1 s/d Ke-6):</td>
+                                        <td class="p-3 text-amber-800 font-extrabold text-sm" id="total-sisa-pinjaman-display">Rp 0</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-200/60">
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Upload Blangko Formulir Pinjaman*</label>
+                                <input type="file" id="loan-blangko" accept="image/*" required class="w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:bg-indigo-50 file:text-indigo-700">
+                            </div>
+                            <div>
+                                <label id="label-loan-jaminan" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">
+                                    Upload Jaminan / Agunan <span id="jaminan-required-tag" class="text-slate-400 font-normal">(Wajib Jika Total Sisa Pinjaman >= Rp 30 Juta)</span>
+                                </label>
+                                <input type="file" id="loan-jaminan" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:bg-slate-50 file:text-slate-700">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg shadow-indigo-200 transition">
+                            Simpan & Ajukan Permohonan Pinjaman
+                        </button>
+                    </form>
+                </div>
+            `;
+        }
+
+        function calculateTotalSisaPinjaman() {
+            let totalSisa = 0;
+            for (let i = 1; i <= 6; i++) {
+                const sisaVal = parseFloat(document.getElementById(`multi-sisa-${i}`)?.value) || 0;
+                const jumlahVal = parseFloat(document.getElementById(`multi-jumlah-${i}`)?.value) || 0;
+                totalSisa += sisaVal > 0 ? sisaVal : jumlahVal;
+            }
+
+            const displayEl = document.getElementById('total-sisa-pinjaman-display');
+            if (displayEl) {
+                displayEl.innerText = `Rp ${totalSisa.toLocaleString('id-ID')}`;
+            }
+
+            const reqTag = document.getElementById('jaminan-required-tag');
+            const jaminanInput = document.getElementById('loan-jaminan');
+
+            if (totalSisa >= 30000000) {
+                if (reqTag) {
+                    reqTag.innerHTML = `<span class="text-rose-600 font-bold animate-pulse">* (WAJIB UPLOAD karena Total Sisa Pinjaman >= Rp 30.000.000)</span>`;
+                }
+                if (jaminanInput) {
+                    jaminanInput.required = true;
+                }
+            } else {
+                if (reqTag) {
+                    reqTag.innerHTML = `<span class="text-slate-400 font-normal">(Opsional / Wajib Jika Total >= Rp 30 Juta)</span>`;
+                }
+                if (jaminanInput) {
+                    jaminanInput.required = false;
+                }
+            }
+
+            return totalSisa;
+        }
+
+        function handleMultiLoanSubmit(e, nip) {
+            e.preventDefault();
+            const blangkoFile = document.getElementById('loan-blangko').files[0];
+            const jaminanFile = document.getElementById('loan-jaminan').files[0];
+
+            let submittedLoans = [];
+            let totalSisaAcc = 0;
+
+            for (let i = 1; i <= 6; i++) {
+                const jumlah = parseFloat(document.getElementById(`multi-jumlah-${i}`).value);
+                const tenor = parseInt(document.getElementById(`multi-tenor-${i}`).value);
+                const keperluan = document.getElementById(`multi-keperluan-${i}`).value.trim();
+                const sisa = parseFloat(document.getElementById(`multi-sisa-${i}`).value) || 0;
+
+                if (jumlah && tenor) {
+                    submittedLoans.push({
+                        index: i,
+                        pinjamanKe: `Pinjaman Ke ${i}`,
+                        jumlahPinjaman: jumlah,
+                        tenor: tenor,
+                        keperluan: keperluan || '-',
+                        sisaPinjaman: sisa
+                    });
+                    totalSisaAcc += sisa > 0 ? sisa : jumlah;
+                }
+            }
+
+            if (submittedLoans.length === 0) {
+                showNotification('Harap isi sekurang-kurangnya satu baris pinjaman!', 'error');
+                return;
+            }
+
+            if (totalSisaAcc >= 30000000 && !jaminanFile) {
+                showNotification('Total Sisa Pinjaman Anda mencapai Rp ' + totalSisaAcc.toLocaleString('id-ID') + ' (>= Rp 30.000.000). Anda WAJIB mengunggah berkas Jaminan / Agunan!', 'error');
+                return;
+            }
+
+            const readerBlangko = new FileReader();
+            readerBlangko.onload = function(ev1) {
+                const blangkoBase64 = ev1.target.result;
+                if (jaminanFile) {
+                    const readerJaminan = new FileReader();
+                    readerJaminan.onload = function(ev2) {
+                        saveAllLoanRecords(nip, submittedLoans, blangkoBase64, ev2.target.result);
+                    };
+                    readerJaminan.readAsDataURL(jaminanFile);
+                } else {
+                    saveAllLoanRecords(nip, submittedLoans, blangkoBase64, null);
+                }
+            };
+            readerBlangko.readAsDataURL(blangkoFile);
+        }
+
+        function saveAllLoanRecords(nip, loanList, blangkoBase64, jaminanBase64) {
+            let loans = getLoans();
+
+            loanList.forEach(item => {
+                const totalBunga = item.jumlahPinjaman * (0.10 * (item.tenor / 12));
+                const totalPengembalian = item.jumlahPinjaman + totalBunga;
+                const cicilanPerBulan = Math.round(totalPengembalian / item.tenor);
+
+                const existingIdx = loans.findIndex(l => l.nip === nip && l.pinjamanKe === item.pinjamanKe);
+                const existingLoan = existingIdx !== -1 ? loans[existingIdx] : null;
+
+                let targetStatus = 'Pending';
+                let targetTglDisetujui = '-';
+                if (existingLoan && existingLoan.status === 'Diterima') {
+                    targetStatus = 'Diterima';
+                    targetTglDisetujui = existingLoan.tglDisetujui || '-';
+                }
+
+                const newLoan = {
+                    id: existingLoan ? existingLoan.id : 'LOAN-' + Date.now() + '-' + item.index,
+                    nip: nip,
+                    pinjamanKe: item.pinjamanKe,
+                    jumlahPinjaman: item.jumlahPinjaman,
+                    sisaPinjaman: item.sisaPinjaman !== undefined ? item.sisaPinjaman : totalPengembalian,
+                    tenor: item.tenor,
+                    cicilanPerBulan: cicilanPerBulan,
+                    totalPengembalian: totalPengembalian,
+                    keperluan: item.keperluan,
+                    blangkoFile: blangkoBase64 || (existingLoan ? existingLoan.blangkoFile : ''),
+                    jaminanFile: jaminanBase64 || (existingLoan ? existingLoan.jaminanFile : null),
+                    status: targetStatus,
+                    tglDisetujui: targetTglDisetujui,
+                    alasanDisetujui: existingLoan ? (existingLoan.alasanDisetujui || '') : '',
+                    alasanDitolak: existingLoan ? (existingLoan.alasanDitolak || '') : '',
+                    createdAt: existingLoan ? existingLoan.createdAt : new Date().toISOString()
+                };
+
+                if (existingIdx !== -1) {
+                    loans[existingIdx] = newLoan;
+                } else {
+                    loans.push(newLoan);
+                }
+
+                syncToGoogleSheets({
+                    action: "saveLoan",
+                    ...newLoan
+                });
+            });
+
+            saveLoans(loans);
+            showNotification('Pengajuan pinjaman berhasil dikirim dan disinkronkan ke Google Sheets!', 'success', () => { userActiveTab = 'loan-history'; render(); });
+        }
+
+        function renderLoanHistoryContent(user) {
+            const loans = getLoans().filter(l => l.nip === user.nip);
+            const allPayments = getPayments();
+
+            if (loans.length === 0) {
+                return `
+                    <div class="glass-card rounded-2xl shadow-sm p-8 text-center space-y-3">
+                        <div class="w-16 h-16 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center mx-auto text-2xl"><i class="fa-solid fa-folder-open"></i></div>
+                        <h4 class="font-bold text-slate-800 text-base">Belum Ada Catatan Pinjaman</h4>
+                        <p class="text-xs text-slate-500">Anda belum pernah mengajukan pinjaman di KPN UNRAM.</p>
+                    </div>
+                `;
+            }
+
+            let html = `
+                <div class="space-y-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white/80 p-4 rounded-2xl border border-slate-200/80 shadow-sm gap-3">
+                        <div>
+                            <h3 class="text-base font-extrabold text-slate-800">Sisa Pinjaman & Rincian Setoran</h3>
+                            <p class="text-xs text-slate-500">Data sisa pinjaman dan setoran disinkronkan dari Google Sheets secara otomatis.</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="fetchLoansAndSavingsFromGoogleSheets('${user.nip}'); render();" class="px-3.5 py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs rounded-xl shadow-sm transition flex items-center gap-1.5 border border-indigo-200">
+                                <i class="fa-solid fa-rotate"></i>
+                                <span>Segarkan Data</span>
+                            </button>
+                            <button onclick="downloadStatusReportPDF('${user.nip}')" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-2">
+                                <i class="fa-solid fa-file-pdf text-sm"></i>
+                                <span>Unduh Laporan (PDF)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="status-report-pdf-area" class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-sm space-y-6 text-slate-800">
+                        <div class="flex items-center justify-between border-b-2 border-slate-900 pb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12">
+                                    <img src="https://lh3.googleusercontent.com/d/1C5jUqDv-1XWXYrwG74XcELc4ThYY_4J3=s220" class="w-full h-full object-contain">
+                                </div>
+                                <div>
+                                    <h2 class="text-base font-extrabold tracking-tight text-slate-900">KPN UNIVERSITAS MATARAM</h2>
+                                    <p class="text-[10px] text-slate-600">Koperasi Pegawai Negeri Universitas Mataram</p>
+                                    <p class="text-[9px] text-slate-500">Jl. Majapahit No. 62 Mataram, NTB</p>
+                                </div>
+                            </div>
+                            <div class="text-right text-xs">
+                                <span class="font-extrabold uppercase text-indigo-700 block">Laporan Sisa Pinjaman & Rincian Setoran</span>
+                                <span class="text-[10px] text-slate-500">Tgl Cetak: ${new Date().toLocaleDateString('id-ID')}</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 text-xs bg-slate-50 p-4 rounded-xl border border-slate-200/60">
+                            <div>
+                                <span class="text-slate-500 block text-[10px] uppercase font-bold">Nama Anggota</span>
+                                <strong class="text-slate-900 text-sm">${user.nama}</strong>
+                            </div>
+                            <div>
+                                <span class="text-slate-500 block text-[10px] uppercase font-bold">NIP / Unit Kerja</span>
+                                <strong class="text-slate-900 font-mono">${user.nip}</strong> <span class="text-slate-600">(${user.unitKerja})</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+            `;
+
+            loans.forEach(loan => {
+                let badgeColor = 'bg-amber-100 text-amber-700';
+                if (loan.status === 'Diterima') badgeColor = 'bg-emerald-100 text-emerald-700';
+                else if (loan.status === 'Ditolak') badgeColor = 'bg-rose-100 text-rose-700';
+
+                const sisa = parseFloat(loan.sisaPinjaman || 0);
+                const tglDisetujui = loan.tglDisetujui || (loan.status === 'Diterima' ? new Date(loan.createdAt).toLocaleDateString('id-ID') : '-');
+                const loanPayments = allPayments.filter(p => p.loanId === loan.id);
+
+                html += `
+                    <div class="bg-white border border-slate-200/80 rounded-2xl p-4 space-y-4 shadow-sm">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-100 pb-3">
+                            <div>
+                                <span class="px-2.5 py-1 bg-indigo-50 text-indigo-700 text-xs font-extrabold rounded-lg">${loan.pinjamanKe}</span>
+                                <span class="text-xs text-slate-500 ml-2">ID: ${loan.id}</span>
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-xs font-bold ${badgeColor}">${loan.status}</span>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs">
+                            <div><span class="text-slate-500 block">Tgl Disetujui</span><strong class="text-emerald-700 font-bold">${tglDisetujui}</strong></div>
+                            <div><span class="text-slate-500 block">Pinjaman Bruto</span><strong class="text-slate-800">Rp ${(loan.jumlahPinjaman || 0).toLocaleString('id-ID')}</strong></div>
+                            <div><span class="text-slate-500 block">Jangka Waktu</span><strong class="text-slate-800">${loan.tenor} Bulan</strong></div>
+                            <div><span class="text-slate-500 block">Angsuran / Bln</span><strong class="text-indigo-600">Rp ${Math.round(loan.cicilanPerBulan || 0).toLocaleString('id-ID')}</strong></div>
+                            <div><span class="text-slate-500 block">Sisa Pinjaman</span><strong class="text-amber-600 font-extrabold text-sm">Rp ${sisa.toLocaleString('id-ID')}</strong></div>
+                        </div>
+
+                        ${loan.alasanDisetujui ? `<div class="p-2.5 bg-emerald-50 border border-emerald-100 rounded-xl text-xs text-emerald-900"><strong>Catatan Disetujui:</strong> ${loan.alasanDisetujui}</div>` : ''}
+                        ${loan.alasanDitolak ? `<div class="p-2.5 bg-rose-50 border border-rose-100 rounded-xl text-xs text-rose-900"><strong>Alasan Ditolak:</strong> ${loan.alasanDitolak}</div>` : ''}
+
+                        <div class="pt-2 border-t border-slate-100 space-y-2">
+                            <h5 class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                                <i class="fa-solid fa-list-check text-indigo-600"></i>
+                                <span>Rincian Schedule Setoran Angsuran (${loan.tenor || 12} Bulan)</span>
+                            </h5>
+                            <div class="overflow-x-auto max-h-60 overflow-y-auto border border-slate-200 rounded-xl">
+                                <table class="w-full text-left border-collapse text-[11px]">
+                                    <thead class="sticky top-0 bg-slate-100 text-slate-700 uppercase tracking-wider text-[10px] shadow-sm">
+                                        <tr>
+                                            <th class="p-2">Angsuran Ke</th>
+                                            <th class="p-2">Jatuh Tempo</th>
+                                            <th class="p-2">Setoran</th>
+                                            <th class="p-2">Kurang Setor</th>
+                                            <th class="p-2">Sisa Pinjaman</th>
+                                            <th class="p-2 text-center">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        ${(() => {
+                                            const tenor = parseInt(loan.tenor) || 12;
+                                            const jumlahPinjaman = parseFloat(loan.jumlahPinjaman) || 0;
+                                            const pokokBln = jumlahPinjaman / tenor;
+                                            const bungaBln = (jumlahPinjaman * 0.10) / 12;
+                                            const totalSetorSeharusnya = pokokBln + bungaBln;
+                                            
+                                            let startDate = new Date(tglDisetujui !== '-' ? tglDisetujui : loan.createdAt);
+                                            let currentSisaPinjamanRunning = jumlahPinjaman;
+                                            let rows = [];
+
+                                            for (let m = 1; m <= tenor; m++) {
+                                                let dueDate = new Date(startDate);
+                                                dueDate.setMonth(dueDate.getMonth() + m);
+
+                                                const pRecord = loanPayments.find(p => p.angsuranKe === m);
+                                                const isPaid = pRecord && pRecord.status === 'Lunas';
+                                                const nominalDisetor = pRecord ? (parseFloat(pRecord.nominalSetoran) || 0) : (isPaid ? Math.round(totalSetorSeharusnya) : 0);
+                                                
+                                                const kurangSetor = isPaid ? (pRecord && pRecord.kurangSetor !== undefined ? parseFloat(pRecord.kurangSetor) : Math.max(0, Math.round(totalSetorSeharusnya) - nominalDisetor)) : 0;
+                                                
+                                                if (isPaid) {
+                                                    currentSisaPinjamanRunning = currentSisaPinjamanRunning - pokokBln + kurangSetor;
+                                                }
+
+                                                rows.push(`
+                                                    <tr class="${isPaid ? (kurangSetor > 0 ? 'bg-amber-50/60' : 'bg-emerald-50/50') : 'hover:bg-slate-50'}">
+                                                        <td class="p-2 font-bold text-indigo-600">Bulan Ke-${m}</td>
+                                                        <td class="p-2 font-mono text-slate-600">${dueDate.toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' })}</td>
+                                                        <td class="p-2 font-bold text-indigo-700">Rp ${Math.round(isPaid ? nominalDisetor : totalSetorSeharusnya).toLocaleString('id-ID')}</td>
+                                                        <td class="p-2 font-bold ${kurangSetor > 0 ? 'text-rose-600' : 'text-slate-400'}">
+                                                            ${kurangSetor > 0 ? `Rp ${kurangSetor.toLocaleString('id-ID')}` : '-'}
+                                                        </td>
+                                                        <td class="p-2 font-bold text-amber-700">Rp ${Math.round(currentSisaPinjamanRunning).toLocaleString('id-ID')}</td>
+                                                        <td class="p-2 text-center">
+                                                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${isPaid ? (kurangSetor > 0 ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800') : 'bg-rose-100 text-rose-800'}">
+                                                                ${isPaid ? (kurangSetor > 0 ? '<i class="fa-solid fa-triangle-exclamation mr-0.5"></i> Kurang Bayar' : '<i class="fa-solid fa-check mr-0.5"></i> Lunas') : '<i class="fa-solid fa-clock mr-0.5"></i> Belum Disetor'}
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                `);
+                                            }
+                                            return rows.join('');
+                                        })()}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `
+                        </div>
+                        <div class="pt-6 border-t border-slate-200 flex justify-between items-end text-[10px] text-slate-400">
+                            <div>
+                                <p>Dokumen ini diterbitkan secara otomatis oleh Portal Resmi KPN UNRAM.</p>
+                                <p>Sisa Pinjaman dapat disinkronkan dan diperbarui dari Google Sheets.</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-slate-600">Pengurus KPN UNRAM</p>
+                                <div class="h-10"></div>
+                                <p class="underline">(_______________________)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return html;
+        }
+
+        function renderUserFilesContent(user) {
+            const loans = getLoans().filter(l => l.nip === user.nip);
+            return `
+                <div class="glass-card rounded-2xl shadow-sm p-6 space-y-4">
+                    <h3 class="text-base font-bold text-slate-800 pb-3 border-b border-slate-200/60 flex items-center space-x-2">
+                        <i class="fa-solid fa-folder-open text-indigo-600"></i>
+                        <span>Berkas Dokumen Terupload</span>
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-white/80 p-4 rounded-2xl border border-slate-200/70 flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-id-card"></i></div>
+                                <div>
+                                    <strong class="block text-xs font-bold text-slate-800">Foto Profil Anggota</strong>
+                                    <span class="text-[11px] text-slate-500">Foto resmi akun</span>
+                                </div>
+                            </div>
+                            <a href="${user.foto}" target="_blank" class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl shadow-sm">Lihat Foto</a>
+                        </div>
+                        ${loans.map((l, i) => `
+                            <div class="bg-white/80 p-4 rounded-2xl border border-slate-200/70 space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs font-bold text-slate-800">Berkas Pengajuan ${l.pinjamanKe} (${l.id})</span>
+                                    <span class="text-[11px] text-slate-500">${new Date(l.createdAt).toLocaleDateString('id-ID')}</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <a href="${l.blangkoFile}" target="_blank" class="px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 text-xs font-semibold rounded-xl border border-indigo-200"><i class="fa-solid fa-file-word mr-1"></i> Blangko Pinjaman</a>
+                                    ${l.jaminanFile ? `<a href="${l.jaminanFile}" target="_blank" class="px-3 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 text-xs font-semibold rounded-xl border border-blue-200"><i class="fa-solid fa-shield mr-1"></i> Jaminan / Agunan</a>` : ''}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAdminDashboard(container, admin) {
+            const users = getUsers();
+            const loans = getLoans();
+            const pendingUsers = users.filter(u => !u.isApproved);
+            const pendingLoans = loans.filter(l => l.status === 'Pending');
+
+            container.innerHTML = `
+                <header class="bg-white/70 backdrop-blur-md border-b border-slate-200/60 sticky top-20 z-40 shadow-sm">
+                    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-xl overflow-hidden bg-indigo-600 text-white flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-user-shield text-lg"></i>
+                            </div>
+                            <div>
+                                <h2 class="font-bold text-sm text-slate-800">Panel Administrator KPN UNRAM</h2>
+                                <p class="text-xs text-slate-600">Kelola Anggota, Persetujuan Akun, Simpanan & Pengajuan Pinjaman</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="currentView='home'; render();" class="px-3 py-2 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 rounded-xl transition border border-slate-200">Ke Beranda</button>
+                            <button onclick="logout()" class="px-3.5 py-2 text-xs font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-xl transition border border-rose-100">Keluar</button>
+                        </div>
+                    </div>
+                </header>
+
+                <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                        <div class="glass-card p-4 rounded-2xl shadow-sm border border-white/80 flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-users"></i></div>
+                            <div>
+                                <span class="text-xs text-slate-500 font-semibold block">Total Anggota</span>
+                                <span class="text-xl font-extrabold text-slate-900">${users.length}</span>
+                            </div>
+                        </div>
+                        <div class="glass-card p-4 rounded-2xl shadow-sm border border-white/80 flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-user-clock"></i></div>
+                            <div>
+                                <span class="text-xs text-slate-500 font-semibold block">Akun Pending</span>
+                                <span class="text-xl font-extrabold text-amber-600">${pendingUsers.length}</span>
+                            </div>
+                        </div>
+                        <div class="glass-card p-4 rounded-2xl shadow-sm border border-white/80 flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-piggy-bank"></i></div>
+                            <div>
+                                <span class="text-xs text-slate-500 font-semibold block">Kelola Simpanan</span>
+                                <span class="text-xl font-extrabold text-emerald-600">Atur Anggota</span>
+                            </div>
+                        </div>
+                        <div class="glass-card p-4 rounded-2xl shadow-sm border border-white/80 flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                            <div>
+                                <span class="text-xs text-slate-500 font-semibold block">Total Pinjaman</span>
+                                <span class="text-xl font-extrabold text-blue-600">${loans.length}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2 bg-white/70 backdrop-blur-md p-2 rounded-2xl border border-slate-200/60 shadow-sm">
+                        <button onclick="adminActiveTab='loans'; render();" class="px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center space-x-2 ${adminActiveTab === 'loans' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-700 hover:bg-slate-100'}">
+                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                            <span>Kelola Pinjaman (${pendingLoans.length} pending)</span>
+                        </button>
+                        <button onclick="adminActiveTab='savings'; render();" class="px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center space-x-2 ${adminActiveTab === 'savings' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-700 hover:bg-slate-100'}">
+                            <i class="fa-solid fa-piggy-bank"></i>
+                            <span>Kelola Simpanan Anggota</span>
+                        </button>
+                        <button onclick="adminActiveTab='users'; render();" class="px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center space-x-2 ${adminActiveTab === 'users' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-700 hover:bg-slate-100'}">
+                            <i class="fa-solid fa-users-gear"></i>
+                            <span>Kelola Anggota & Approval (${pendingUsers.length})</span>
+                        </button>
+                    </div>
+
+                    ${adminActiveTab === 'loans' ? renderAdminLoansSection(loans, users) : ''}
+                    ${adminActiveTab === 'savings' ? renderAdminSavingsSection(users) : ''}
+                    ${adminActiveTab === 'users' ? renderAdminUsersSection(users) : ''}
+                </main>
+            `;
+        }
+
+        function renderAdminSavingsSection(users) {
+            const approvedUsers = users.filter(u => u.isApproved && u.nip !== 'admin');
+            return `
+                <div class="glass-card rounded-2xl shadow-sm p-6 space-y-4">
+                    <h3 class="text-base font-bold text-slate-800 pb-3 border-b border-slate-200/60 flex items-center space-x-2">
+                        <i class="fa-solid fa-piggy-bank text-indigo-600"></i>
+                        <span>Pengaturan & Pengelolaan Simpanan Anggota KPN UNRAM</span>
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-100/70 text-slate-600 uppercase tracking-wider text-[11px]">
+                                    <th class="p-3 rounded-l-xl">Anggota (NIP)</th>
+                                    <th class="p-3">Simpanan Pokok</th>
+                                    <th class="p-3">Simpanan Wajib</th>
+                                    <th class="p-3">Simpanan Sukarela</th>
+                                    <th class="p-3">Total Simpanan</th>
+                                    <th class="p-3 rounded-r-xl text-center">Aksi / Atur</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200/50">
+                                ${approvedUsers.length === 0 ? `<tr><td colspan="6" class="p-6 text-center text-slate-500">Belum ada anggota aktif terdaftar.</td></tr>` : approvedUsers.map(u => {
+                                    const sav = calculateUserSavings(u.nip);
+                                    return `
+                                        <tr class="hover:bg-white/50 transition">
+                                            <td class="p-3">
+                                                <strong class="text-slate-900 block">${u.nama}</strong>
+                                                <span class="text-[10px] text-slate-500">NIP: ${u.nip} | ${u.unitKerja}</span>
+                                            </td>
+                                            <td class="p-3 font-bold text-indigo-600">Rp ${sav.pokok.toLocaleString('id-ID')}</td>
+                                            <td class="p-3 font-bold text-blue-600">Rp ${sav.wajib.toLocaleString('id-ID')}</td>
+                                            <td class="p-3 font-bold text-teal-600">Rp ${sav.sukarela.toLocaleString('id-ID')}</td>
+                                            <td class="p-3 font-extrabold text-slate-900 bg-slate-50 rounded-xl">Rp ${sav.total.toLocaleString('id-ID')}</td>
+                                            <td class="p-3 text-center">
+                                                <button onclick="openEditSavingsModal('${u.nip}', '${u.nama}')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-sm text-[11px] flex items-center justify-center space-x-1 mx-auto">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                    <span>Atur Simpanan</span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function openEditSavingsModal(nip, nama) {
+            const sav = calculateUserSavings(nip);
+            const modal = document.createElement('div');
+            modal.id = 'savings-modal';
+            modal.className = 'fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn';
+
+            modal.innerHTML = `
+                <div class="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-md w-full p-6 border border-white/40 space-y-4">
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-3">
+                        <h3 class="font-extrabold text-slate-800 text-base">Atur Simpanan Anggota</h3>
+                        <button onclick="document.getElementById('savings-modal').remove()" class="text-slate-400 hover:text-slate-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="text-xs text-slate-600 bg-indigo-50 p-3 rounded-xl border border-indigo-100">
+                        <strong>Anggota:</strong> ${nama} (NIP: ${nip})
+                    </div>
+                    <form onsubmit="handleAdminUpdateSavings(event, '${nip}')" class="space-y-3 text-xs">
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Simpanan Pokok (Rp)</label>
+                            <input type="number" id="admin-sav-pokok" min="0" value="${sav.pokok}" required class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 font-semibold">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Simpanan Wajib (Rp)</label>
+                            <input type="number" id="admin-sav-wajib" min="0" value="${sav.wajib}" required class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 font-semibold">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Simpanan Sukarela (Rp)</label>
+                            <input type="number" id="admin-sav-sukarela" min="0" value="${sav.sukarela}" required class="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 font-semibold">
+                        </div>
+                        <div class="pt-2 flex space-x-2">
+                            <button type="button" onclick="document.getElementById('savings-modal').remove()" class="flex-1 py-2.5 bg-slate-100 text-slate-700 font-bold rounded-xl hover:bg-slate-200 transition">Batal</button>
+                            <button type="submit" class="flex-1 py-2.5 bg-indigo-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function handleAdminUpdateSavings(e, nip) {
+            e.preventDefault();
+            const pokok = parseFloat(document.getElementById('admin-sav-pokok').value) || 0;
+            const wajib = parseFloat(document.getElementById('admin-sav-wajib').value) || 0;
+            const sukarela = parseFloat(document.getElementById('admin-sav-sukarela').value) || 0;
+
+            let allSavings = getSavings().filter(s => s.nip !== nip);
+
+            const newRecords = [
+                { id: 'SAV-P-' + Date.now(), nip: nip, jenis: 'Pokok', jumlah: pokok, status: 'Disetujui', createdAt: new Date().toISOString() },
+                { id: 'SAV-W-' + Date.now(), nip: nip, jenis: 'Wajib', jumlah: wajib, status: 'Disetujui', createdAt: new Date().toISOString() },
+                { id: 'SAV-S-' + Date.now(), nip: nip, jenis: 'Sukarela', jumlah: sukarela, status: 'Disetujui', createdAt: new Date().toISOString() }
+            ];
+
+            allSavings.push(...newRecords);
+            saveSavings(allSavings);
+
+            newRecords.forEach(savItem => {
+                syncToGoogleSheets({
+                    action: "saveSavings",
+                    ...savItem
+                });
+            });
+
+            const modal = document.getElementById('savings-modal');
+            if (modal) modal.remove();
+
+            showNotification('Data simpanan anggota berhasil diperbarui dan dikirim ke Google Sheets!', 'success', render);
+        }
+
+        function renderAdminLoansSection(loans, users) {
+            const filterNip = window._filterNip || '';
+            const filterPinjamanKe = window._filterPinjamanKe || '';
+            const filterUnit = window._filterUnit || '';
+
+            const filteredLoans = loans.filter(l => {
+                const u = users.find(x => x.nip === l.nip) || {};
+                const matchNip = !filterNip || l.nip.toLowerCase().includes(filterNip.toLowerCase()) || (u.nama || '').toLowerCase().includes(filterNip.toLowerCase());
+                const matchPinjaman = !filterPinjamanKe || l.pinjamanKe === filterPinjamanKe;
+                const matchUnit = !filterUnit || u.unitKerja === filterUnit;
+                return matchNip && matchPinjaman && matchUnit;
+            });
+
+            let unitOptions = UNIT_KERJA_LIST.map(u => `<option value="${u}" ${filterUnit === u ? 'selected' : ''}>${u}</option>`).join('');
+
+            return `
+                <div class="glass-card rounded-2xl shadow-sm p-6 space-y-4">
+                    <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-3 pb-3 border-b border-slate-200/60">
+                        <h3 class="text-base font-bold text-slate-800 flex items-center space-x-2">
+                            <i class="fa-solid fa-file-invoice-dollar text-indigo-600"></i>
+                            <span>Daftar Permohonan & Kelola Pinjaman Anggota</span>
+                        </h3>
+                        
+                        <div class="flex flex-wrap items-center gap-2 text-xs">
+                            <div class="relative">
+                                <input type="text" id="filter-nip-input" value="${filterNip}" oninput="window._filterNip=this.value;" placeholder="Cari NIP / Nama..." class="px-3 py-1.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 w-36">
+                            </div>
+                            <div class="relative">
+                                <select id="filter-pinjaman-select" onchange="window._filterPinjamanKe=this.value; render();" class="px-3 py-1.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                    <option value="">-- Semua Pinjaman --</option>
+                                    ${[1, 2, 3, 4, 5, 6].map(i => `<option value="Pinjaman Ke ${i}" ${filterPinjamanKe === `Pinjaman Ke ${i}` ? 'selected' : ''}>Pinjaman Ke ${i}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="relative">
+                                <select id="filter-unit-select" onchange="window._filterUnit=this.value; render();" class="px-3 py-1.5 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500">
+                                    <option value="">-- Semua Unit / Fak --</option>
+                                    ${unitOptions}
+                                </select>
+                            </div>
+                            ${filterNip || filterPinjamanKe || filterUnit ? `<button onclick="window._filterNip=''; window._filterPinjamanKe=''; window._filterUnit=''; render();" class="px-2.5 py-1.5 bg-slate-200 text-slate-700 rounded-xl hover:bg-slate-300 transition font-bold">Reset</button>` : ''}
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-100/70 text-slate-600 uppercase tracking-wider text-[11px]">
+                                    <th class="p-3 rounded-l-xl">ID / Tanggal</th>
+                                    <th class="p-3">Anggota (NIP)</th>
+                                    <th class="p-3">Pinjaman Ke</th>
+                                    <th class="p-3">Bruto / Sisa Pinjaman</th>
+                                    <th class="p-3">Catatan Admin</th>
+                                    <th class="p-3">Status</th>
+                                    <th class="p-3 rounded-r-xl text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200/50">
+                                ${filteredLoans.length === 0 ? `<tr><td colspan="7" class="p-6 text-center text-slate-500">Tidak ada data pinjaman yang sesuai dengan filter.</td></tr>` : filteredLoans.map(l => {
+                                    const u = users.find(x => x.nip === l.nip) || { nama: 'Unknown', unitKerja: '-' };
+                                    let badgeColor = 'bg-amber-100 text-amber-700';
+                                    if (l.status === 'Diterima') badgeColor = 'bg-emerald-100 text-emerald-700';
+                                    else if (l.status === 'Ditolak') badgeColor = 'bg-rose-100 text-rose-700';
+
+                                    const sisa = parseFloat(l.sisaPinjaman || 0);
+                                    const catatan = l.alasanDisetujui || l.alasanDitolak || '-';
+
+                                    return `
+                                        <tr class="hover:bg-white/50 transition">
+                                            <td class="p-3">
+                                                <strong class="font-mono text-indigo-600 block">${l.id}</strong>
+                                                <span class="text-[10px] text-slate-400">${new Date(l.createdAt).toLocaleDateString('id-ID')}</span>
+                                            </td>
+                                            <td class="p-3">
+                                                <strong class="text-slate-800 block">${u.nama}</strong>
+                                                <span class="text-[10px] text-slate-500">NIP: ${l.nip} | ${u.unitKerja}</span>
+                                            </td>
+                                            <td class="p-3 font-bold text-indigo-600">${l.pinjamanKe}</td>
+                                            <td class="p-3">
+                                                <span class="block font-semibold">Bruto: Rp ${(l.jumlahPinjaman || 0).toLocaleString('id-ID')}</span>
+                                                <span class="text-[10px] text-amber-700 font-bold">Sisa: Rp ${sisa.toLocaleString('id-ID')}</span>
+                                            </td>
+                                            <td class="p-3 text-slate-700 max-w-xs text-[11px]">
+                                                ${catatan}
+                                            </td>
+                                            <td class="p-3"><span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${badgeColor}">${l.status}</span></td>
+                                            <td class="p-3 text-center">
+                                                <div class="flex items-center justify-center space-x-1">
+                                                    ${l.status === 'Pending' ? `
+                                                        <button onclick="openApproveLoanModal('${l.id}')" class="px-2 py-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow-sm text-[11px]" title="Setujui Pinjaman"><i class="fa-solid fa-check mr-1"></i> Setujui</button>
+                                                        <button onclick="openRejectLoanModal('${l.id}')" class="px-2 py-1 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-lg shadow-sm text-[11px]" title="Tolak Pinjaman"><i class="fa-solid fa-xmark mr-1"></i> Tolak</button>
+                                                    ` : `
+                                                        <button onclick="openApproveLoanModal('${l.id}')" class="px-2 py-1 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 text-[10px]" title="Edit / Atur Pinjaman"><i class="fa-solid fa-pen-to-square mr-1"></i> Edit</button>
+                                                        <button onclick="openRejectLoanModal('${l.id}')" class="px-2 py-1 bg-amber-600 text-white font-bold rounded-lg hover:bg-amber-700 text-[10px]" title="Ubah ke Tolak"><i class="fa-solid fa-xmark mr-1"></i> Tolak</button>
+                                                    `}
+                                                    <button onclick="openPaymentHistoryModal('${l.id}')" class="px-2 py-1 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 text-[10px]" title="Kelola Rincian Setoran"><i class="fa-solid fa-receipt mr-1"></i> Setoran</button>
+                                                    <button onclick="deleteLoanRecord('${l.id}')" class="px-2 py-1 bg-rose-50 text-rose-600 border border-rose-200 font-bold rounded-lg hover:bg-rose-100 text-[10px]" title="Hapus Data Pinjaman"><i class="fa-solid fa-trash mr-1"></i> Hapus</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function deleteLoanRecord(loanId) {
+            if (confirm(`Apakah Anda yakin ingin menghapus data permohonan pinjaman ${loanId} secara permanen?`)) {
+                let loans = getLoans().filter(l => l.id !== loanId);
+                saveLoans(loans);
+
+                let payments = getPayments().filter(p => p.loanId !== loanId);
+                savePayments(payments);
+
+                syncToGoogleSheets({
+                    action: "deleteLoan",
+                    id: loanId
+                });
+
+                showNotification(`Data pinjaman ${loanId} berhasil dihapus secara permanen.`, 'success', render);
+            }
+        }
+
+        function openApproveLoanModal(loanId) {
+            const loans = getLoans();
+            const loan = loans.find(l => l.id === loanId);
+            if (!loan) return;
+
+            const users = getUsers();
+            const user = users.find(u => u.nip === loan.nip) || { nama: loan.nip };
+
+            const jml = parseFloat(loan.jumlahPinjaman) || 0;
+            const tnr = parseInt(loan.tenor) || 12;
+            const autoAngsuran = Math.round((jml / tnr) + (jml * 0.10 / 12));
+
+            const modal = document.createElement('div');
+            modal.id = 'approve-loan-modal';
+            modal.className = 'fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn';
+
+            modal.innerHTML = `
+                <div class="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-md w-full p-6 border border-white/40 space-y-4">
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-3">
+                        <h3 class="font-extrabold text-slate-800 text-base flex items-center gap-2">
+                            <i class="fa-solid fa-circle-check text-emerald-600"></i>
+                            <span>Setujui / Edit Permohonan Pinjaman</span>
+                        </h3>
+                        <button onclick="document.getElementById('approve-loan-modal').remove()" class="text-slate-400 hover:text-slate-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="text-xs text-slate-600 bg-emerald-50 p-3 rounded-xl border border-emerald-100 space-y-1">
+                        <div><strong>Pemohon:</strong> ${user.nama} (NIP: ${loan.nip})</div>
+                        <div><strong>Pinjaman Ke:</strong> ${loan.pinjamanKe} | ID: ${loan.id}</div>
+                    </div>
+                    <form onsubmit="handleConfirmApproveLoan(event, '${loan.id}')" class="space-y-3 text-xs">
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Tanggal Disetujui*</label>
+                            <input type="date" id="admin-approved-tgl" value="${loan.tglDisetujui && loan.tglDisetujui !== '-' ? loan.tglDisetujui : new Date().toISOString().split('T')[0]}" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 font-semibold">
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Besar Pinjaman (Rp)*</label>
+                            <input type="number" id="admin-approved-jumlah" min="100000" step="50000" value="${loan.jumlahPinjaman}" oninput="recalculateAngsuranModal()" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 font-bold text-indigo-600">
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Jangka Waktu / Tenor (Bulan)*</label>
+                            <input type="number" id="admin-approved-tenor" min="1" max="60" value="${loan.tenor}" oninput="recalculateAngsuranModal()" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 font-semibold">
+                        </div>
+
+                        <div class="p-2.5 bg-slate-100 rounded-xl border border-slate-200 space-y-1">
+                            <span class="text-[10px] text-slate-500 font-bold uppercase block">Angsuran Bulanan Otomatis (1 Bln Setelah Disetujui):</span>
+                            <span id="preview-angsuran-modal" class="font-extrabold text-sm text-indigo-700">Rp ${autoAngsuran.toLocaleString('id-ID')} / bulan</span>
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-amber-800 mb-1">Sisa Pinjaman (Rp)*</label>
+                            <input type="number" id="admin-approved-sisa" min="0" step="1000" value="${loan.sisaPinjaman !== undefined ? loan.sisaPinjaman : loan.totalPengembalian}" required class="w-full px-3 py-2 bg-amber-50 border border-amber-300 rounded-xl focus:outline-none focus:border-amber-500 font-extrabold text-amber-700">
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-emerald-800 mb-1">Alasan / Catatan Disetujui*</label>
+                            <textarea id="admin-alasan-disetujui" rows="2" required class="w-full px-3 py-2 bg-white border border-emerald-300 rounded-xl focus:outline-none focus:border-emerald-500 text-xs" placeholder="Masukkan alasan persetujuan...">${loan.alasanDisetujui || 'Persyaratan dan kelengkapan dokumen telah memenuhi syarat.'}</textarea>
+                        </div>
+
+                        <div class="pt-2 flex space-x-2">
+                            <button type="button" onclick="document.getElementById('approve-loan-modal').remove()" class="flex-1 py-2.5 bg-slate-100 text-slate-700 font-bold rounded-xl hover:bg-slate-200 transition">Batal</button>
+                            <button type="submit" class="flex-1 py-2.5 bg-emerald-600 text-white font-bold rounded-xl shadow-lg shadow-emerald-200 hover:bg-emerald-700 transition flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Setujui & Simpan</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function recalculateAngsuranModal() {
+            const jml = parseFloat(document.getElementById('admin-approved-jumlah').value) || 0;
+            const tnr = parseInt(document.getElementById('admin-approved-tenor').value) || 12;
+            const autoAngsuran = Math.round((jml / tnr) + (jml * 0.10 / 12));
+            const previewEl = document.getElementById('preview-angsuran-modal');
+            if (previewEl) {
+                previewEl.innerText = `Rp ${autoAngsuran.toLocaleString('id-ID')} / bulan`;
+            }
+        }
+
+        function handleConfirmApproveLoan(e, loanId) {
+            e.preventDefault();
+            const approvedTgl = document.getElementById('admin-approved-tgl').value;
+            const approvedJumlah = parseFloat(document.getElementById('admin-approved-jumlah').value) || 0;
+            const approvedSisa = parseFloat(document.getElementById('admin-approved-sisa').value) || 0;
+            const approvedTenor = parseInt(document.getElementById('admin-approved-tenor').value) || 12;
+            const alasan = document.getElementById('admin-alasan-disetujui').value.trim();
+
+            const loans = getLoans();
+            const loan = loans.find(l => l.id === loanId);
+
+            if (loan) {
+                const cicilanPerBulan = Math.round((approvedJumlah / approvedTenor) + (approvedJumlah * 0.10 / 12));
+                const totalPengembalian = cicilanPerBulan * approvedTenor;
+
+                loan.status = 'Diterima';
+                loan.tglDisetujui = approvedTgl;
+                loan.jumlahPinjaman = approvedJumlah;
+                loan.sisaPinjaman = approvedSisa;
+                loan.tenor = approvedTenor;
+                loan.totalPengembalian = totalPengembalian;
+                loan.cicilanPerBulan = cicilanPerBulan;
+                loan.alasanDisetujui = alasan;
+                loan.alasanDitolak = '';
+
+                saveLoans(loans);
+
+                syncToGoogleSheets({
+                    action: "saveLoan",
+                    ...loan
+                });
+
+                const modal = document.getElementById('approve-loan-modal');
+                if (modal) modal.remove();
+
+                showNotification(`Permohonan pinjaman ${loanId} berhasil disetujui! Laporan PDF akan otomatis terunduh.`, 'success', () => {
+                    render();
+                    setTimeout(() => {
+                        downloadStatusReportPDF(loan.nip);
+                    }, 500);
+                });
+            }
+        }
+
+        function openRejectLoanModal(loanId) {
+            const loans = getLoans();
+            const loan = loans.find(l => l.id === loanId);
+            if (!loan) return;
+
+            const modal = document.createElement('div');
+            modal.id = 'reject-loan-modal';
+            modal.className = 'fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn';
+
+            modal.innerHTML = `
+                <div class="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-md w-full p-6 border border-white/40 space-y-4">
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-3">
+                        <h3 class="font-extrabold text-slate-800 text-base flex items-center gap-2">
+                            <i class="fa-solid fa-circle-xmark text-rose-600"></i>
+                            <span>Tolak Permohonan Pinjaman</span>
+                        </h3>
+                        <button onclick="document.getElementById('reject-loan-modal').remove()" class="text-slate-400 hover:text-slate-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <form onsubmit="handleConfirmRejectLoan(event, '${loan.id}')" class="space-y-3 text-xs">
+                        <div>
+                            <label class="block font-bold text-rose-800 mb-1">Alasan Penolakan*</label>
+                            <textarea id="admin-alasan-ditolak" rows="3" required class="w-full px-3 py-2 bg-white border border-rose-300 rounded-xl focus:outline-none focus:border-rose-500 text-xs" placeholder="Masukkan alasan penolakan...">${loan.alasanDitolak || 'Dokumen tidak lengkap atau melampaui batas kemampuan angsuran.'}</textarea>
+                        </div>
+
+                        <div class="pt-2 flex space-x-2">
+                            <button type="button" onclick="document.getElementById('reject-loan-modal').remove()" class="flex-1 py-2.5 bg-slate-100 text-slate-700 font-bold rounded-xl hover:bg-slate-200 transition">Batal</button>
+                            <button type="submit" class="flex-1 py-2.5 bg-rose-600 text-white font-bold rounded-xl shadow-lg shadow-rose-200 hover:bg-rose-700 transition flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-xmark"></i>
+                                <span>Tolak Pinjaman</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function handleConfirmRejectLoan(e, loanId) {
+            e.preventDefault();
+            const alasan = document.getElementById('admin-alasan-ditolak').value.trim();
+
+            const loans = getLoans();
+            const loan = loans.find(l => l.id === loanId);
+
+            if (loan) {
+                loan.alasanDitolak = alasan;
+                loan.alasanDisetujui = '';
+                loan.status = 'Ditolak';
+
+                saveLoans(loans);
+
+                syncToGoogleSheets({
+                    action: "saveLoan",
+                    ...loan
+                });
+
+                const modal = document.getElementById('reject-loan-modal');
+                if (modal) modal.remove();
+
+                showNotification(`Permohonan pinjaman ${loanId} telah ditolak.`, 'success', render);
+            }
+        }
+
+        function openPaymentHistoryModal(loanId) {
+            const loans = getLoans();
+            const loan = loans.find(l => l.id === loanId);
+            if (!loan) return;
+
+            const payments = getPayments().filter(p => p.loanId === loanId);
+
+            const tenor = parseInt(loan.tenor) || 12;
+            const jumlahPinjaman = parseFloat(loan.jumlahPinjaman) || 0;
+            const pokokBln = jumlahPinjaman / tenor;
+            const bungaBln = (jumlahPinjaman * 0.10) / 12;
+            const totalSetorSeharusnya = Math.round(pokokBln + bungaBln);
+            let startDate = new Date(loan.tglDisetujui !== '-' ? loan.tglDisetujui : loan.createdAt);
+
+            const modal = document.createElement('div');
+            modal.id = 'payment-history-modal';
+            modal.className = 'fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn';
+
+            modal.innerHTML = `
+                <div class="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-3xl w-full p-6 border border-white/40 space-y-4">
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-3">
+                        <h3 class="font-extrabold text-slate-800 text-base flex items-center gap-2">
+                            <i class="fa-solid fa-receipt text-emerald-600"></i>
+                            <span>Kelola Rincian & Nominal Setoran (${tenor} Bulan)</span>
+                        </h3>
+                        <button onclick="document.getElementById('payment-history-modal').remove()" class="text-slate-400 hover:text-slate-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+
+                    <div class="bg-indigo-50 p-3 rounded-2xl border border-indigo-100 text-xs grid grid-cols-2 gap-2">
+                        <div><strong>ID Pinjaman:</strong> ${loan.id} (${loan.pinjamanKe})</div>
+                        <div><strong>NIP Anggota:</strong> ${loan.nip}</div>
+                        <div><strong>Pinjaman Pokok:</strong> Rp ${jumlahPinjaman.toLocaleString('id-ID')}</div>
+                        <div><strong>Standar Angsuran / Bulan:</strong> <span class="font-bold text-indigo-700">Rp ${totalSetorSeharusnya.toLocaleString('id-ID')}</span></div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <span class="font-bold text-xs text-slate-800 block">Edit Setoran & Status Angsuran:</span>
+                        <div class="max-h-72 overflow-y-auto border border-slate-200 rounded-2xl">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-slate-100 text-slate-600 text-[10px] uppercase sticky top-0 shadow-sm">
+                                    <tr>
+                                        <th class="p-2">Angsuran</th>
+                                        <th class="p-2">Jatuh Tempo</th>
+                                        <th class="p-2">Setoran (Rp)</th>
+                                        <th class="p-2">Kurang Setor</th>
+                                        <th class="p-2">Sisa Pinjaman</th>
+                                        <th class="p-2 text-center">Aksi / Simpan</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100 text-[11px]">
+                                    ${(() => {
+                                        let currentSisaPinjamanRunning = jumlahPinjaman;
+                                        let rows = [];
+
+                                        for (let m = 1; m <= tenor; m++) {
+                                            let dueDate = new Date(startDate);
+                                            dueDate.setMonth(dueDate.getMonth() + m);
+
+                                            const pRecord = payments.find(p => p.angsuranKe === m);
+                                            const isPaid = pRecord && pRecord.status === 'Lunas';
+                                            const nominalVal = pRecord ? pRecord.nominalSetoran : totalSetorSeharusnya;
+
+                                            const autoKurang = isPaid ? Math.max(0, totalSetorSeharusnya - nominalVal) : 0;
+                                            const kurangSetorVal = pRecord && pRecord.kurangSetor !== undefined ? parseFloat(pRecord.kurangSetor) : autoKurang;
+                                            
+                                            if (isPaid) {
+                                                currentSisaPinjamanRunning = currentSisaPinjamanRunning - pokokBln + kurangSetorVal;
+                                            }
+
+                                            rows.push(`
+                                                <tr class="${isPaid ? (kurangSetorVal > 0 ? 'bg-amber-50/60' : 'bg-emerald-50/40') : 'bg-rose-50/20'}">
+                                                    <td class="p-2 font-bold text-indigo-600">Ke-${m}</td>
+                                                    <td class="p-2 font-mono">${dueDate.toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' })}</td>
+                                                    <td class="p-2">
+                                                        <input type="number" id="input-setor-${m}" value="${nominalVal}" step="1000" min="0" class="w-28 px-2 py-1 bg-white border border-slate-300 rounded-lg text-xs font-bold text-indigo-700 focus:outline-none focus:border-indigo-500">
+                                                    </td>
+                                                    <td class="p-2">
+                                                        <input type="number" id="input-kurang-${m}" value="${kurangSetorVal}" step="1000" min="0" placeholder="0" class="w-24 px-2 py-1 bg-white border border-rose-200 rounded-lg text-xs font-bold text-rose-600 focus:outline-none focus:border-rose-500">
+                                                    </td>
+                                                    <td class="p-2 font-bold text-amber-600">Rp ${Math.round(currentSisaPinjamanRunning).toLocaleString('id-ID')}</td>
+                                                    <td class="p-2 text-center flex items-center justify-center gap-1">
+                                                        <button onclick="saveAndTogglePayment('${loan.id}', ${m}, ${totalSetorSeharusnya})" class="px-2.5 py-1 rounded-lg text-[10px] font-bold transition ${isPaid ? 'bg-emerald-600 text-white shadow-sm hover:bg-emerald-700' : 'bg-indigo-600 text-white hover:bg-indigo-700'}">
+                                                            ${isPaid ? '<i class="fa-solid fa-check mr-0.5"></i> Update Setoran' : '<i class="fa-solid fa-floppy-disk mr-0.5"></i> Setor & Lunas'}
+                                                        </button>
+                                                        ${isPaid ? `<button onclick="cancelPaymentStatus('${loan.id}', ${m})" class="px-2 py-1 bg-rose-50 text-rose-600 border border-rose-200 rounded-lg text-[10px] font-bold hover:bg-rose-100" title="Batalkan Pelunasan"><i class="fa-solid fa-rotate-left"></i></button>` : ''}
+                                                    </td>
+                                                </tr>
+                                            `);
+                                        }
+                                        return rows.join('');
+                                    })()}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function saveAndTogglePayment(loanId, angsuranKe, totalSetorSeharusnya) {
+            const inputEl = document.getElementById(`input-setor-${angsuranKe}`);
+            const inputKurangEl = document.getElementById(`input-kurang-${angsuranKe}`);
+            
+            const nominalSetor = parseFloat(inputEl.value) || 0;
+            const kurangSetorVal = inputKurangEl ? (parseFloat(inputKurangEl.value) || 0) : 0;
+
+            let payments = getPayments();
+            const existingIdx = payments.findIndex(p => p.loanId === loanId && p.angsuranKe === angsuranKe);
+
+            const loans = getLoans();
+            const loan = loans.find(l => l.id === loanId);
+
+            const newPayment = {
+                id: existingIdx !== -1 ? payments[existingIdx].id : 'PAY-' + Date.now() + '-' + angsuranKe,
+                loanId: loanId,
+                nip: loan ? loan.nip : '',
+                angsuranKe: angsuranKe,
+                tglBayar: new Date().toLocaleDateString('id-ID'),
+                nominalSetoran: nominalSetor,
+                kurangSetor: kurangSetorVal,
+                status: 'Lunas',
+                createdAt: new Date().toISOString()
+            };
+
+            if (existingIdx !== -1) {
+                payments[existingIdx] = newPayment;
+            } else {
+                payments.push(newPayment);
+            }
+
+            savePayments(payments);
+
+            if (loan) {
+                const tenor = parseInt(loan.tenor) || 12;
+                const jumlahPinjaman = parseFloat(loan.jumlahPinjaman) || 0;
+                const pokokBln = jumlahPinjaman / tenor;
+
+                let calculatedSisa = jumlahPinjaman;
+                for (let m = 1; m <= tenor; m++) {
+                    const pRec = payments.find(p => p.loanId === loanId && p.angsuranKe === m && p.status === 'Lunas');
+                    if (pRec) {
+                        const kVal = pRec.kurangSetor !== undefined ? parseFloat(pRec.kurangSetor) : 0;
+                        calculatedSisa = calculatedSisa - pokokBln + kVal;
+                    }
+                }
+                
+                loan.sisaPinjaman = Math.max(0, calculatedSisa);
+
+                saveLoans(loans);
+                syncToGoogleSheets({
+                    action: "saveLoan",
+                    ...loan
+                });
+            }
+
+            const modal = document.getElementById('payment-history-modal');
+            if (modal) modal.remove();
+
+            openPaymentHistoryModal(loanId);
+            render();
+        }
+
+        function cancelPaymentStatus(loanId, angsuranKe) {
+            let payments = getPayments();
+            const existingIdx = payments.findIndex(p => p.loanId === loanId && p.angsuranKe === angsuranKe);
+
+            if (existingIdx !== -1) {
+                payments.splice(existingIdx, 1);
+                savePayments(payments);
+
+                const loans = getLoans();
+                const loan = loans.find(l => l.id === loanId);
+                if (loan) {
+                    const tenor = parseInt(loan.tenor) || 12;
+                    const jumlahPinjaman = parseFloat(loan.jumlahPinjaman) || 0;
+                    const pokokBln = jumlahPinjaman / tenor;
+
+                    let calculatedSisa = jumlahPinjaman;
+                    for (let m = 1; m <= tenor; m++) {
+                        const pRec = payments.find(p => p.loanId === loanId && p.angsuranKe === m && p.status === 'Lunas');
+                        if (pRec) {
+                            const kVal = pRec.kurangSetor !== undefined ? parseFloat(pRec.kurangSetor) : 0;
+                            calculatedSisa = calculatedSisa - pokokBln + kVal;
+                        }
+                    }
+
+                    loan.sisaPinjaman = Math.max(0, calculatedSisa);
+
+                    saveLoans(loans);
+                    syncToGoogleSheets({
+                        action: "saveLoan",
+                        ...loan
+                    });
+                }
+
+                const modal = document.getElementById('payment-history-modal');
+                if (modal) modal.remove();
+
+                openPaymentHistoryModal(loanId);
+                render();
+            }
+        }
+
+        function renderAdminUsersSection(users) {
+            return `
+                <div class="glass-card rounded-2xl shadow-sm p-6 space-y-4">
+                    <h3 class="text-base font-bold text-slate-800 pb-3 border-b border-slate-200/60 flex items-center space-x-2">
+                        <i class="fa-solid fa-users-gear text-indigo-600"></i>
+                        <span>Persetujuan & Manajemen Akun Anggota</span>
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-100/70 text-slate-600 uppercase tracking-wider text-[11px]">
+                                    <th class="p-3 rounded-l-xl">Anggota</th>
+                                    <th class="p-3">NIP / Golongan</th>
+                                    <th class="p-3">Password</th>
+                                    <th class="p-3">Unit Kerja</th>
+                                    <th class="p-3">Telp / WA</th>
+                                    <th class="p-3">Status Akun</th>
+                                    <th class="p-3 rounded-r-xl text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200/50">
+                                ${users.map((u, index) => {
+                                    const inputId = `pwd-input-${index}`;
+                                    return `
+                                    <tr class="hover:bg-white/50 transition">
+                                        <td class="p-3 flex items-center space-x-3">
+                                            <div class="w-9 h-9 rounded-xl overflow-hidden bg-slate-200 flex-shrink-0">
+                                                <img src="${u.foto}" class="w-full h-full object-cover">
+                                            </div>
+                                            <div>
+                                                <strong class="text-slate-900 block">${u.nama}</strong>
+                                                <span class="text-[10px] text-slate-500">${u.role}</span>
+                                            </div>
+                                        </td>
+                                        <td class="p-3">
+                                            <strong class="font-mono text-slate-800 block">${u.nip}</strong>
+                                            <span class="text-[10px] text-slate-500">${u.golongan}</span>
+                                        </td>
+                                        <td class="p-3">
+                                            <div class="relative w-32 flex items-center">
+                                                <input type="password" id="${inputId}" value="${u.password}" readonly class="w-full bg-slate-100 px-2 py-1 pr-6 rounded text-[11px] font-mono border border-slate-200">
+                                                <button onclick="togglePasswordVisibility('${inputId}')" class="absolute right-1.5 text-slate-400 hover:text-slate-600 text-[10px]"><i id="icon-${inputId}" class="fa-solid fa-eye"></i></button>
+                                            </div>
+                                        </td>
+                                        <td class="p-3 text-slate-700">${u.unitKerja}</td>
+                                        <td class="p-3 font-semibold text-emerald-600">${u.telp || '-'}</td>
+                                        <td class="p-3">
+                                            <span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${u.isApproved ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">
+                                                ${u.isApproved ? 'Disetujui' : 'Pending'}
+                                            </span>
+                                        </td>
+                                        <td class="p-3 text-center space-x-1">
+                                            ${!u.isApproved ? `
+                                                <button onclick="approveUserAccount('${u.nip}')" class="px-2.5 py-1 bg-emerald-600 text-white rounded-lg font-bold text-[11px] hover:bg-emerald-700"><i class="fa-solid fa-user-check"></i> Setujui</button>
+                                            ` : ''}
+                                            ${u.nip !== 'admin' ? `
+                                                <button onclick="deleteUserAccount('${u.nip}')" class="px-2 py-1 bg-rose-50 text-rose-600 rounded-lg font-bold text-[11px] hover:bg-rose-100"><i class="fa-solid fa-trash"></i></button>
+                                            ` : ''}
+                                        </td>
+                                    </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function approveUserAccount(nip) {
+            const users = getUsers();
+            const user = users.find(u => u.nip === nip);
+            if (user) {
+                user.isApproved = true;
+                saveUsers(users);
+                showNotification(`Akun ${user.nama} berhasil disetujui!`, 'success', render);
+            }
+        }
+
+        function deleteUserAccount(nip) {
+            if (confirm('Apakah Anda yakin ingin menghapus akun anggota ini?')) {
+                let users = getUsers().filter(u => u.nip !== nip);
+                saveUsers(users);
+                showNotification('Akun anggota berhasil dihapus.', 'success', render);
+            }
+        }
+
+        render();
+    </script>
+</body>
+</html>
